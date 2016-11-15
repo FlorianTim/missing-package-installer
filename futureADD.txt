@@ -1,0 +1,18 @@
+#Programmieren
+gradle meld
+
+#office
+simple-scan gscan2pdf keepass2
+
+#tools
+brasero
+
+#sync
+dropbox
+
+#multimedia
+vlc 
+
+#sec
+cryptkeeper
+
