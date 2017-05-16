@@ -39,6 +39,7 @@ NAME_EXT_NODE="Node.js"
 NAME_EXT_DOCKER="Docker"
 NAME_EXT_GITKRAKEN="Gitkraken (DEB)"
 NAME_EXT_VSCODE="Visual Studio Code (PPA)"
+NAME_EXT_SKYPE="Skype (DEB)"
 NAME_SCRIPT_UPDATE="Update-Script"
 NAME_SCRIPT_KERNEL="Kernel-Script"
 
@@ -337,6 +338,20 @@ function install_ext_vscode()
 }
 
 
+##
+# External: Skype installation.
+##
+function install_ext_skype()
+{
+	echo -e "\nInstalling Skype"
+	sudo apt update && sudo apt install -y curl
+	curl -sL -o skype.deb https://go.skype.com/skypeforlinux-64.deb | sudo -E bash -
+	# using dpkg to force install deb over older versions
+	sudo dpkg -i skype.deb
+	echo "Skype insalled"
+}
+
+
 
 ## Warning msg on start
 if [ $DIST_N == "Ubuntu" ]
@@ -370,6 +385,7 @@ $NAME_EXT_NODE " - Install Node.js" OFF \
 $NAME_EXT_DOCKER " - Install Docker" OFF \
 $NAME_EXT_GITKRAKEN " - Install Gitkraken" OFF \
 $NAME_EXT_VSCODE " - Install Visual Studio Code" OFF \
+$NAME_EXT_SKYPE " - Install Skype" OFF \
 $NAME_SCRIPT_UPDATE " - A system update script" OFF \
 $NAME_SCRIPT_KERNEL " - A script to remove unused kernels " OFF \
 3>&1 1>&2 2>&3)
@@ -467,6 +483,8 @@ if [ $exitstatus = 0 ]; then
 	case "${DISTROS[@]}" in *$NAME_EXT_VSCODE*)
 		install_ext_vscode ;; esac
 
+	case "${DISTROS[@]}" in *$NAME_EXT_SKYPE*)
+		install_ext_skype ;; esac
 
 
 else
