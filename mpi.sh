@@ -37,6 +37,8 @@ NAME_PPA_PAPIRUS="PPA-Papirus"
 NAME_EXT_RUST="Rust-Lang"
 NAME_EXT_NODE="Node.js"
 NAME_EXT_DOCKER="Docker"
+NAME_EXT_GITKRAKEN="Gitkraken (DEB)"
+NAME_EXT_VSCODE="Visual Studio Code (PPA)"
 NAME_SCRIPT_UPDATE="Update-Script"
 NAME_SCRIPT_KERNEL="Kernel-Script"
 
@@ -306,6 +308,36 @@ function install_ext_docker()
 	echo "Docker installed"
 }
 
+##
+# External: Gitkraken installation.
+##
+function install_ext_gitkraken()
+{
+	echo -e "\nInstalling Gitkraken"
+	sudo apt update && sudo apt install -y curl
+	curl -sL -o gitkraken.deb https://release.gitkraken.com/linux/gitkraken-amd64.deb | sudo -E bash -
+	# using dpkg to force install gitkraken over older versions
+	sudo dpkg -i gitkraken.deb
+	echo "Gitkraken insalled"
+}
+
+##
+# External: Visual Studio Code installation.
+##
+function install_ext_vscode()
+{
+	echo -e "\nInstalling Visual Studio Code"
+	sudo apt update && sudo apt install -y curl
+	curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+	sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+	sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+	sudo apt-get update
+	sudo apt-get install code # or code-insiders
+	echo "Visual Studio Code insalled"
+}
+
+
+
 ## Warning msg on start
 if [ $DIST_N == "Ubuntu" ]
 then
@@ -336,6 +368,8 @@ $NAME_PPA_PAPIRUS " - Papirus icon Theme" OFF \
 $NAME_EXT_RUST " - Install Rust Language" OFF \
 $NAME_EXT_NODE " - Install Node.js" OFF \
 $NAME_EXT_DOCKER " - Install Docker" OFF \
+$NAME_EXT_GITKRAKEN " - Install Gitkraken" OFF \
+$NAME_EXT_VSCODE " - Install Visual Studio Code" OFF \
 $NAME_SCRIPT_UPDATE " - A system update script" OFF \
 $NAME_SCRIPT_KERNEL " - A script to remove unused kernels " OFF \
 3>&1 1>&2 2>&3)
@@ -426,6 +460,14 @@ if [ $exitstatus = 0 ]; then
 
 	case "${DISTROS[@]}" in *$NAME_EXT_DOCKER*)
 		install_ext_docker ;; esac
+
+	case "${DISTROS[@]}" in *$NAME_EXT_GITKRAKEN*)
+		install_ext_gitkraken ;; esac
+
+	case "${DISTROS[@]}" in *$NAME_EXT_VSCODE*)
+		install_ext_vscode ;; esac
+
+
 
 else
     	echo "Package installation aborted."
