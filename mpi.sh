@@ -290,6 +290,10 @@ function install_ext_docker()
 		elif [ $DIST_V == "14.04" ]
 		then
 			echo -e "deb https://apt.dockerproject.org/repo ubuntu-trusty main" >> $file_tmp
+		
+		elif [ $DIST_V == "17.04" ]
+		then
+			echo -e "deb https://apt.dockerproject.org/repo ubuntu-zesty main" >> $file_tmp
 		fi
 
 	elif [ $DIST_N == "LinuxMint" ]
