@@ -1,9 +1,9 @@
 # !/bin/bash
 # Missing package installer for (X)ubuntu 16.04 and 14.04.
 # A simple script for installing some of the missing software (i like to use) on new systems
-# 2016.10.23 by TRi
+# 2017.04.24 by TRi
 
-VER="0.5"
+VER="0.5.2"
 DIST_V="$(lsb_release -r -s)"
 DIST_N="$(lsb_release -i -s)"
 
@@ -16,7 +16,7 @@ PKG_INET="mumble corebird filezilla polari"
 PKG_INET_14="mumble filezilla xchat-gnome"
 PKG_GFX="imagemagick inkscape gimp xsane"
 PKG_GAMES="wesnoth hedgewars gweled scummvm burgerspace"
-PKG_ATOM_EXT="terminal-plus python-debugger language-haskell git-time-machine git-plus autocomplete-python activate-power-mode pdf-view minimap project-manager language-vue bottom-dock gulp-manager todo-manager symbols-tree-view pigments language-ini"
+PKG_ATOM_EXT="platformio-ide-terminal python-debugger language-haskell git-time-machine git-plus autocomplete-python pdf-view minimap project-manager language-vue bottom-dock gulp-manager todo-manager symbols-tree-view pigments language-ini highlight-selected minimap-highlight-selected rest-client"
 
 NAME_SYSTEM="System"
 NAME_DEV="Development"
@@ -26,7 +26,6 @@ NAME_LATEX="LaTeX"
 NAME_INET="Internet"
 NAME_GFX="Graphics"
 NAME_GAMES="Games"
-NAME_PPA_PAPIRUS="PPA-Papirus"
 NAME_PPA_KODI="PPA-Kodi"
 NAME_PPA_VLC="PPA-VLC"
 NAME_PPA_JAVA="PPA-Java"
@@ -34,6 +33,7 @@ NAME_PPA_LIBREOFFICE="PPA-Libre"
 NAME_PPA_GIT="PPA-Git"
 NAME_PPA_ATOM="PPA-Atom"
 NAME_PPA_HIPCHAT="PPA-HipChat"
+NAME_PPA_PAPIRUS="PPA-Papirus"
 NAME_EXT_RUST="Rust-Lang"
 NAME_EXT_NODE="Node.js"
 NAME_EXT_DOCKER="Docker"
@@ -122,7 +122,7 @@ function install_kernel_script()
 	fi
 	touch $file_tmp
 	echo -e "#!/bin/sh" >> $file_tmp
-	echo -e "sudo apt-get remove --purge \$(dpkg -l 'linux-*' | sed '/^ii/!d;/'\"\$(uname -r | sed \"s/\(.*\)-\([^0-9]\+\)/\\1/\")\"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\\1/;/[0-9]/!d')" >> $file_tmp
+	echo -e "echo \$(dpkg --list | grep linux-image | awk '{ print \$2 }' | sort -V | sed -n '/'`uname -r`'/q;p') \$(dpkg --list | grep linux-headers | awk '{ print \$2 }' | sort -V | sed -n '/'\"\$(uname -r | sed \"s/\([0-9.-]*\)-\([^0-9]\+\)/\1/\")\"'/q;p') | xargs sudo apt-get -y purge" >> $file_tmp
 
 	if [ -f "$file_dst" ]
 	then
@@ -131,18 +131,6 @@ function install_kernel_script()
 	sudo cp $file_tmp $file_dst
 	sudo chmod a+x $file_dst
 	echo "Installation of script to remove old kernels complete. Run 'remove-old-kernels'"
-}
-
-##
-# PPA: Install Papirus Icon Theme.
-##
-function install_PPA_papirus()
-{
-	echo -e "\nInstalling Papirus Icon Theme PPA"
-	sudo add-apt-repository ppa:varlesh-l/papirus-pack -y
-	sudo apt update
-	sudo apt install -y papirus-gtk-icon-theme
-	echo "Papirus Icon Theme PPA installed"
 }
 
 ##
@@ -230,6 +218,17 @@ function install_PPA_HIPCHAT()
 	sudo apt update
 	sudo apt install -y hipchat4
 	echo "Atlassian HipChat installed"
+}
+
+##
+# PPA: Papirus Icon Theme
+##
+function install_PPA_PAIRUS() {
+	echo -e "\nInstalling Papirus Icon Theme PPA"
+	sudo add-apt-repository ppa:papirus/papirus -y
+	sudo apt update
+	sudo apt install -y papirus-icon-theme
+	echo "Papirus Icon Theme installed"
 }
 
 ##
@@ -331,9 +330,9 @@ $NAME_PPA_GIT " - The latest Git" OFF \
 $NAME_PPA_LIBREOFFICE " - The latest LibreOffice" OFF \
 $NAME_PPA_KODI " - The latest Kodi" OFF \
 $NAME_PPA_VLC " - The latest VLC" OFF \
-$NAME_PPA_PAPIRUS " - Papirus Icon Theme" OFF \
 $NAME_PPA_ATOM " - Atom hackable text editor" OFF \
 $NAME_PPA_HIPCHAT " - Atlassian HipChat4" OFF \
+$NAME_PPA_PAPIRUS " - Papirus icon Theme" OFF \
 $NAME_EXT_RUST " - Install Rust Language" OFF \
 $NAME_EXT_NODE " - Install Node.js" OFF \
 $NAME_EXT_DOCKER " - Install Docker" OFF \
@@ -393,9 +392,6 @@ if [ $exitstatus = 0 ]; then
 
 
 	## PPAs
-	case "${DISTROS[@]}" in *$NAME_PPA_PAPIRUS*)
-		install_PPA_papirus ;; esac
-
 	case "${DISTROS[@]}" in *$NAME_PPA_KODI*)
 		install_PPA_Kodi ;; esac
 
@@ -416,6 +412,9 @@ if [ $exitstatus = 0 ]; then
 
 	case "${DISTROS[@]}" in *$NAME_PPA_HIPCHAT*)
 		install_PPA_HIPCHAT ;; esac
+
+	case "${DISTROS[@]}" in *$NAME_PPA_PAPIRUS*)
+		install_PPA_PAIRUS ;; esac
 
 
 	## External

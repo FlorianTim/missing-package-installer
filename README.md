@@ -57,15 +57,11 @@ https://launchpad.net/~team-xbmc/+archive/ubuntu/ppa
 VLC Daily Build of stable branch<br>
 https://launchpad.net/~videolan/+archive/ubuntu/stable-daily
 
-### PPA-Papirus
-Papirus Icon Theme.<br>
-https://launchpad.net/~varlesh-l/+archive/ubuntu/papirus-pack
-
 ### PPA-Atom Editor
 GitHub's Atom, the hackable text editor.
 https://launchpad.net/~webupd8team/+archive/ubuntu/atom/+index <br>
 Includes following addons:
-- language-haskell
+- platformio-ide-terminal
 - language-vue  
 - language-ini
 - terminal-plus
@@ -82,10 +78,18 @@ Includes following addons:
 - todo-manager
 - symbols-tree-view
 - pigments
+- highlight-selected
+- minimap-highlight-selected
+- rest-client
 
 ### PPA-Atlassian HipChat
 Group and private chat, file sharing, and integrations.<br>
 https://de.atlassian.com/software/hipchat
+
+### PPA-Papirus icon theme
+Papirus is a free and open source SVG icon theme for Linux.<br>
+https://launchpad.net/~papirus/+archive/ubuntu/papirus<br>
+https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
 
 ### Rust Language
 The Rust Programming Language.<br>
