@@ -4,6 +4,8 @@ gradle meld
 #office
 simple-scan gscan2pdf keepass2
 
+https://www.zotero.org/start_standalone
+
 #tools
 brasero
 
