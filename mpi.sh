@@ -42,7 +42,8 @@ NAME_EXT_VSCODE="Visual Studio Code (PPA)"
 NAME_EXT_SKYPE="Skype (DEB)"
 NAME_EXT_ZOTERO="Zotero (TAR)"
 NAME_EXT_REMARKABLE="Remarkable (DEB)"
-NAME_EXT_INTELLIJ="IntelliJ (DEB)"
+NAME_EXT_INTELLIJ="IntelliJ (PPA)"
+NAME_EXT_MasterPDF="Master PDF (DEB)"
 NAME_SCRIPT_UPDATE="Update-Script"
 NAME_SCRIPT_KERNEL="Kernel-Script"
 
@@ -404,6 +405,21 @@ function install_PPA_intellij()
 }
 
 
+##
+# External: remarkable installation.
+##
+function install_ext_masterpdf()
+{
+	echo -e "\nInstalling masterpdf"
+	sudo apt update && sudo apt install -y curl
+	curl -sL -o masterpdf.deb http://get.code-industry.net/public/master-pdf-editor-4.1.30_qt5.amd64.deb | sudo -E bash -
+	# using dpkg to force install deb over older versions
+	sudo dpkg -i masterpdf.deb
+	rm masterpdf.deb
+	echo "masterpdf insalled"
+}
+
+
 ## Warning msg on start
 if [ $DIST_N == "Ubuntu" ]
 then
@@ -440,6 +456,7 @@ $NAME_EXT_SKYPE " - Install Skype" OFF \
 $NAME_EXT_ZOTERO " - Install Zotero" OFF \
 $NAME_EXT_REMARKABLE " - Install Remarkable" OFF \
 $NAME_EXT_INTELLIJ " - Install IntelliJ" OFF \
+$NAME_EXT_MasterPDF " - Install Master PDF" OFF \
 $NAME_SCRIPT_UPDATE " - A system update script" OFF \
 $NAME_SCRIPT_KERNEL " - A script to remove unused kernels " OFF \
 3>&1 1>&2 2>&3)
@@ -549,6 +566,8 @@ if [ $exitstatus = 0 ]; then
 	case "${DISTROS[@]}" in *$NAME_EXT_INTELLIJ*)
 		install_ext_intellij ;; esac
 	
+	case "${DISTROS[@]}" in *$NAME_EXT_MasterPDF*)
+		install_ext_masterpdf ;; esac
 
 
 else
