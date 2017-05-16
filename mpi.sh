@@ -42,6 +42,7 @@ NAME_EXT_VSCODE="Visual Studio Code (PPA)"
 NAME_EXT_SKYPE="Skype (DEB)"
 NAME_EXT_ZOTERO="Zotero (TAR)"
 NAME_EXT_REMARKABLE="Remarkable (DEB)"
+NAME_EXT_INTELLIJ="IntelliJ (DEB)"
 NAME_SCRIPT_UPDATE="Update-Script"
 NAME_SCRIPT_KERNEL="Kernel-Script"
 
@@ -389,6 +390,19 @@ function install_ext_remarkable()
 	echo "remarkable insalled"
 }
 
+##
+# PPA: Install IntelliJ.
+#
+function install_PPA_intellij()
+{
+	echo -e "\nInstalling IntelliJ PPA"
+	sudo sudo add-apt-repository ppa:mmk2410/intellij-idea -y
+	sudo apt update
+	sudo apt install -y intellij-idea-ultimate
+	#intellij-idea-community
+	echo "IntelliJ installed"
+}
+
 
 ## Warning msg on start
 if [ $DIST_N == "Ubuntu" ]
@@ -425,6 +439,7 @@ $NAME_EXT_VSCODE " - Install Visual Studio Code" OFF \
 $NAME_EXT_SKYPE " - Install Skype" OFF \
 $NAME_EXT_ZOTERO " - Install Zotero" OFF \
 $NAME_EXT_REMARKABLE " - Install Remarkable" OFF \
+$NAME_EXT_INTELLIJ " - Install IntelliJ" OFF \
 $NAME_SCRIPT_UPDATE " - A system update script" OFF \
 $NAME_SCRIPT_KERNEL " - A script to remove unused kernels " OFF \
 3>&1 1>&2 2>&3)
@@ -530,6 +545,9 @@ if [ $exitstatus = 0 ]; then
 
 	case "${DISTROS[@]}" in *$NAME_EXT_REMARKABLE*)
 		install_ext_remarkable ;; esac
+
+	case "${DISTROS[@]}" in *$NAME_EXT_INTELLIJ*)
+		install_ext_intellij ;; esac
 	
 
 
