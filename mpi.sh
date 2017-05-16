@@ -40,6 +40,8 @@ NAME_EXT_DOCKER="Docker"
 NAME_EXT_GITKRAKEN="Gitkraken (DEB)"
 NAME_EXT_VSCODE="Visual Studio Code (PPA)"
 NAME_EXT_SKYPE="Skype (DEB)"
+NAME_EXT_ZOTERO="Zotero (TAR)"
+NAME_EXT_REMARKABLE="Remarkable (DEB)"
 NAME_SCRIPT_UPDATE="Update-Script"
 NAME_SCRIPT_KERNEL="Kernel-Script"
 
@@ -352,6 +354,41 @@ function install_ext_skype()
 }
 
 
+##
+# External: Zotero installation.
+##
+function install_ext_zotero()
+{
+	echo -e "\nInstalling zotero"
+	sudo apt update && sudo apt install -y curl tar tar-doc 
+	ZOTERO_DIR="/opt/zotero"
+	ZOTERO_FILE="zotero.tar.bz2"
+	sudo mkdir $ZOTERO_DIR
+	sudo chown $USER:$USER $ZOTERO_DIR
+	curl -sL -o $ZOTERO_FILE https://download.zotero.org/standalone/4.0.29.10/Zotero-4.0.29.10_linux-x86_64.tar.bz2 | sudo -E bash -
+	sudo tar -xjf $ZOTERO_FILE -C $ZOTERO_DIR
+	rm $ZOTERO_FILE
+	sudo chown -R $USER:$USER $ZOTERO_DIR
+	sudo ln -s $ZOTERO_DIR/Zotero_linux-x86_64/zotero /usr/bin/
+	sudo chmod ugo+x /usr/bin/zotero
+	echo "zotero insalled"
+}
+
+
+#
+##
+# External: remarkable installation.
+##
+function install_ext_remarkable()
+{
+	echo -e "\nInstalling remarkable"
+	sudo apt update && sudo apt install -y curl
+	curl -sL -o remarkable.deb https://remarkableapp.github.io/files/remarkable_1.87_all.deb | sudo -E bash -
+	# using dpkg to force install deb over older versions
+	sudo dpkg -i remarkable.deb
+	echo "remarkable insalled"
+}
+
 
 ## Warning msg on start
 if [ $DIST_N == "Ubuntu" ]
@@ -386,6 +423,8 @@ $NAME_EXT_DOCKER " - Install Docker" OFF \
 $NAME_EXT_GITKRAKEN " - Install Gitkraken" OFF \
 $NAME_EXT_VSCODE " - Install Visual Studio Code" OFF \
 $NAME_EXT_SKYPE " - Install Skype" OFF \
+$NAME_EXT_ZOTERO " - Install Zotero" OFF \
+$NAME_EXT_REMARKABLE " - Install Remarkable" OFF \
 $NAME_SCRIPT_UPDATE " - A system update script" OFF \
 $NAME_SCRIPT_KERNEL " - A script to remove unused kernels " OFF \
 3>&1 1>&2 2>&3)
@@ -485,6 +524,13 @@ if [ $exitstatus = 0 ]; then
 
 	case "${DISTROS[@]}" in *$NAME_EXT_SKYPE*)
 		install_ext_skype ;; esac
+
+	case "${DISTROS[@]}" in *$NAME_EXT_ZOTERO*)
+		install_ext_zotero ;; esac
+
+	case "${DISTROS[@]}" in *$NAME_EXT_REMARKABLE*)
+		install_ext_remarkable ;; esac
+	
 
 
 else
