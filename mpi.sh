@@ -1,4 +1,4 @@
-# !/bin/bash
+#!/bin/bash
 # Missing package installer for (X)ubuntu 16.04 and 14.04.
 # A simple script for installing some of the missing software (i like to use) on new systems
 # 2017.04.24 by TRi
@@ -62,7 +62,7 @@ function update_packages()
 function install_packages()
 {
 	echo -e "\nInstalling: $*"
-	sudo apt update && sudo apt install -y $*
+	sudo apt update && sudo apt install -y "$@"
 }
 
 ##
@@ -82,26 +82,26 @@ function install_update_script()
 	fi
 	touch $file_tmp
 	echo -e "#!/bin/sh" >> $file_tmp
-	if [ $DIST_N == "Ubuntu" ]
+	if [ "$DIST_N" == "Ubuntu" ]
 	then
 
-		if [ $DIST_V == "16.04" ]
+		if [ "$DIST_V" == "16.04" ]
 		then
-			echo -e $apt >> $file_tmp
+			echo -e "$apt" >> $file_tmp
 
-		elif [ $DIST_V == "14.04" ]
+		elif [ "$DIST_V" == "14.04" ]
 		then
-			echo -e $apt_get >> $file_tmp
+			echo -e "$apt_get" >> $file_tmp
 		fi
 
-	elif [ $DIST_N == "LinuxMint" ]
+	elif [ "$DIST_N" == "LinuxMint" ]
 	then
 
-		if [ $DIST_V == "18" ]
+		if [ "$DIST_V" == "18" ]
 		then
-			echo -e $apt >> $file_tmp
+			echo -e "$apt" >> $file_tmp
 		else
-			echo -e $apt_get >> $file_tmp
+			echo -e "$apt_get" >> $file_tmp
 		fi
 
 	fi
@@ -279,27 +279,27 @@ function install_ext_docker()
 	fi
 	touch $file_tmp
 
-	if [ $DIST_N == "Ubuntu" ]
+	if [ "$DIST_N" == "Ubuntu" ]
 	then
 
-		if [ $DIST_V == "16.04" ]
+		if [ "$DIST_V" == "16.04" ]
 		then
 			echo -e "deb https://apt.dockerproject.org/repo ubuntu-xenial main" >> $file_tmp
 
 
-		elif [ $DIST_V == "14.04" ]
+		elif [ "$DIST_V" == "14.04" ]
 		then
 			echo -e "deb https://apt.dockerproject.org/repo ubuntu-trusty main" >> $file_tmp
 		
-		elif [ $DIST_V == "17.04" ]
+		elif [ "$DIST_V" == "17.04" ]
 		then
 			echo -e "deb https://apt.dockerproject.org/repo ubuntu-zesty main" >> $file_tmp
 		fi
 
-	elif [ $DIST_N == "LinuxMint" ]
+	elif [ "$DIST_N" == "LinuxMint" ]
 	then
 
-			if [ $DIST_V == "18" ]
+			if [ "$DIST_V" == "18" ]
 			then
 				echo -e "deb https://apt.dockerproject.org/repo ubuntu-xenial main" >> $file_tmp
 			fi
@@ -370,11 +370,11 @@ function install_ext_zotero()
 	ZOTERO_DIR="/opt/zotero"
 	ZOTERO_FILE="zotero.tar.bz2"
 	sudo mkdir $ZOTERO_DIR
-	sudo chown $USER:$USER $ZOTERO_DIR
+	sudo chown "$USER":"$USER" $ZOTERO_DIR
 	curl -sL -o $ZOTERO_FILE https://download.zotero.org/standalone/4.0.29.10/Zotero-4.0.29.10_linux-x86_64.tar.bz2 | sudo -E bash -
 	sudo tar -xjf $ZOTERO_FILE -C $ZOTERO_DIR
 	rm $ZOTERO_FILE
-	sudo chown -R $USER:$USER $ZOTERO_DIR
+	sudo chown -R "$USER":"$USER" $ZOTERO_DIR
 	sudo ln -s $ZOTERO_DIR/Zotero_linux-x86_64/zotero /usr/bin/
 	sudo chmod ugo+x /usr/bin/zotero
 	echo "zotero insalled"
@@ -425,7 +425,7 @@ function install_ext_masterpdf()
 
 
 ## Warning msg on start
-if [ $DIST_N == "Ubuntu" ]
+if [ "$DIST_N" == "Ubuntu" ]
 then
 	whiptail --title "Missing Package Installer V$VER" --msgbox "This script supports (x)ubuntu 16.04 and 14.04 at the moment.\nAnd as always: use at your own risk." 8 78
 else
@@ -454,13 +454,13 @@ $NAME_PPA_PAPIRUS " - Papirus icon Theme" OFF \
 $NAME_EXT_RUST " - Install Rust Language" OFF \
 $NAME_EXT_NODE " - Install Node.js" OFF \
 $NAME_EXT_DOCKER " - Install Docker" OFF \
-$NAME_EXT_GITKRAKEN " - Install Gitkraken" OFF \
-$NAME_EXT_VSCODE " - Install Visual Studio Code" OFF \
-$NAME_EXT_SKYPE " - Install Skype" OFF \
-$NAME_EXT_ZOTERO " - Install Zotero" OFF \
-$NAME_EXT_REMARKABLE " - Install Remarkable" OFF \
-$NAME_EXT_INTELLIJ " - Install IntelliJ" OFF \
-$NAME_EXT_MasterPDF " - Install Master PDF" OFF \
+"$NAME_EXT_GITKRAKEN" " - Install Gitkraken" OFF \
+"$NAME_EXT_VSCODE" " - Install Visual Studio Code" OFF \
+"$NAME_EXT_SKYPE" " - Install Skype" OFF \
+"$NAME_EXT_ZOTERO" " - Install Zotero" OFF \
+"$NAME_EXT_REMARKABLE" " - Install Remarkable" OFF \
+"$NAME_EXT_INTELLIJ" " - Install IntelliJ" OFF \
+"$NAME_EXT_MasterPDF" " - Install Master PDF" OFF \
 $NAME_SCRIPT_UPDATE " - A system update script" OFF \
 $NAME_SCRIPT_KERNEL " - A script to remove unused kernels " OFF \
 3>&1 1>&2 2>&3)
