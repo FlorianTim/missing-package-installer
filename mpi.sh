@@ -10,7 +10,7 @@ DIST_N="$(lsb_release -i -s)"
 PKG_SYS="mc htop iftop conky imwheel curl keepassx keepass2 gufw gparted p7zip-full bleachbit compton wmctrl kdocker terminator scrot redshift gtk-redshift synaptic aptitude cups csh lib32stdc++6 cryptkeeper"
 PKG_DEV="build-essential gdb git tig python-pip monodevelop mono-runtime geany geany-common netbeans meld"
 PKG_MEDIA="vlc soundconverter easytag sound-juicer libdvdread4 brasero ubuntu-restricted-extras"
-PKG_OFFICE="pdfshuffler pdfchain libreoffice-impress gscan2pdf simple-scan"
+PKG_OFFICE="pdfshuffler pdfchain libreoffice-impress gscan2pdf simple-scan nautilus-dropbox"
 PKG_LATEX="texstudio lyx lyx-common texlive texlive-lang-german"
 PKG_INET="mumble corebird filezilla polari"
 PKG_INET_14="mumble filezilla xchat-gnome"
@@ -410,7 +410,7 @@ function install_PPA_intellij()
 
 
 ##
-# External: remarkable installation.
+# External: Master-PDF installation.
 ##
 function install_ext_masterpdf()
 {
