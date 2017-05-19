@@ -7,7 +7,7 @@ VER="0.5"
 DIST_V="$(lsb_release -r -s)"
 DIST_N="$(lsb_release -i -s)"
 
-PKG_SYS="mc htop iftop conky imwheel curl keepassx gufw gparted p7zip-full bleachbit compton wmctrl kdocker terminator scrot redshift gtk-redshift synaptic aptitude cups csh lib32stdc++6"
+PKG_SYS="mc htop iftop conky imwheel curl keepassx gufw gparted p7zip-full bleachbit compton wmctrl kdocker terminator scrot redshift gtk-redshift synaptic aptitude cups csh lib32stdc++6 gnome-tweak-tool"
 PKG_DEV="build-essential gdb git tig python-pip monodevelop mono-runtime geany geany-common netbeans"
 PKG_MEDIA="vlc soundconverter easytag sound-juicer libdvdread4 brasero ubuntu-restricted-extras"
 PKG_OFFICE="pdfshuffler pdfchain libreoffice-impress"
@@ -17,6 +17,7 @@ PKG_INET_14="mumble filezilla xchat-gnome"
 PKG_GFX="imagemagick inkscape gimp xsane"
 PKG_GAMES="wesnoth hedgewars gweled scummvm burgerspace"
 PKG_ATOM_EXT="terminal-plus python-debugger language-haskell git-time-machine git-plus autocomplete-python activate-power-mode pdf-view minimap project-manager language-vue bottom-dock gulp-manager todo-manager symbols-tree-view pigments language-ini"
+
 
 NAME_SYSTEM="System"
 NAME_DEV="Development"
