@@ -18,6 +18,7 @@ PKG_GFX="imagemagick inkscape gimp xsane"
 PKG_GAMES="wesnoth hedgewars gweled scummvm burgerspace"
 PKG_ATOM_EXT="platformio-ide-terminal python-debugger language-haskell git-time-machine git-plus autocomplete-python pdf-view minimap project-manager language-vue bottom-dock gulp-manager todo-manager symbols-tree-view pigments language-ini highlight-selected minimap-highlight-selected rest-client"
 
+
 NAME_SYSTEM="System"
 NAME_DEV="Development"
 NAME_MEDIA="Media"
