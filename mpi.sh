@@ -7,7 +7,7 @@ VER="0.5.2"
 DIST_V="$(lsb_release -r -s)"
 DIST_N="$(lsb_release -i -s)"
 
-PKG_SYS="mc htop iftop conky imwheel curl keepassx keepass2 gufw gparted p7zip-full bleachbit compton wmctrl kdocker terminator scrot redshift gtk-redshift synaptic aptitude cups csh lib32stdc++6 cryptkeeper"
+PKG_SYS="mc htop iftop conky imwheel curl keepassx keepass2 gufw gparted p7zip-full bleachbit compton wmctrl kdocker terminator scrot redshift gtk-redshift synaptic aptitude cups csh lib32stdc++6 cryptkeeper gnome-tweak-tool"
 PKG_DEV="build-essential gdb git tig python-pip monodevelop mono-runtime geany geany-common netbeans meld"
 PKG_MEDIA="vlc soundconverter easytag sound-juicer libdvdread4 brasero ubuntu-restricted-extras"
 PKG_OFFICE="pdfshuffler pdfchain libreoffice-impress gscan2pdf simple-scan nautilus-dropbox"
@@ -47,6 +47,8 @@ NAME_EXT_INTELLIJ="IntelliJ (PPA)"
 NAME_EXT_MasterPDF="Master PDF (DEB)"
 NAME_SCRIPT_UPDATE="Update-Script"
 NAME_SCRIPT_KERNEL="Kernel-Script"
+NAME_EXT_Themes="Themes (PPA)"
+NAME_EXT_CHROME="Chrome (PPA)"
 
 ##
 # Updates the already installed packages.
@@ -424,6 +426,44 @@ function install_ext_masterpdf()
 	echo "masterpdf insalled"
 }
 
+##
+# PPA: Install Themes.
+#
+function install_PPA_themes()
+{
+	echo -e "\nInstalling themes PPA"
+	sudo sudo sudo add-apt-repository ppa:noobslab/themes -y
+	sudo sudo sudo add-apt-repository ppa:noobslab/icons -y
+	sudo apt update
+	sudo apt install -y t4g-v2-theme minwaita-theme albatross-theme chrome-android-os-themes arc-theme
+	sudo apt install -y perforated-edge-icons arc-icons evolvere-icon-suite faenza-icon-theme faience-icon-theme 
+	#intellij-idea-community
+	echo "themes installed"
+}
+
+##
+# External: Chrome installation.
+##
+function install_ext_chrome()
+{
+	echo -e "\nInstalling Chrome"
+	if [[ $(getconf LONG_BIT) = "64" ]]
+	then
+    echo "64bit Detected" &&
+    echo "Installing Google Chrome" &&
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &&
+    sudo dpkg -i google-chrome-stable_current_amd64.deb &&
+    rm -f google-chrome-stable_current_amd64.deb
+	else
+    echo "32bit Detected" &&
+    echo "Installing Google Chrome" &&
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb &&
+    sudo dpkg -i google-chrome-stable_current_i386.deb &&
+    rm -f google-chrome-stable_current_i386.deb
+	fi
+	echo "Chrome insalled"
+}
+
 
 ## Warning msg on start
 if [ "$DIST_N" == "Ubuntu" ]
@@ -462,6 +502,8 @@ $NAME_EXT_DOCKER " - Install Docker" OFF \
 "$NAME_EXT_REMARKABLE" " - Install Remarkable" OFF \
 "$NAME_EXT_INTELLIJ" " - Install IntelliJ" OFF \
 "$NAME_EXT_MasterPDF" " - Install Master PDF" OFF \
+"$NAME_EXT_Themes" " - Install Themes" OFF \
+"$NAME_EXT_CHROME" " - Install Chrome" OFF \
 $NAME_SCRIPT_UPDATE " - A system update script" OFF \
 $NAME_SCRIPT_KERNEL " - A script to remove unused kernels " OFF \
 3>&1 1>&2 2>&3)
@@ -569,10 +611,18 @@ if [ $exitstatus = 0 ]; then
 		install_ext_remarkable ;; esac
 
 	case "${DISTROS[@]}" in *$NAME_EXT_INTELLIJ*)
-		install_ext_intellij ;; esac
+		install_PPA_intellij ;; esac
 	
 	case "${DISTROS[@]}" in *$NAME_EXT_MasterPDF*)
 		install_ext_masterpdf ;; esac
+
+	case "${DISTROS[@]}" in *$NAME_EXT_Themes*)
+		install_PPA_themes ;; esac
+
+	case "${DISTROS[@]}" in *$NAME_EXT_CHROME*)
+		install_ext_chrome ;; esac
+
+
 
 
 else
