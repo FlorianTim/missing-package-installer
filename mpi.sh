@@ -7,7 +7,7 @@ VER="0.5.2"
 DIST_V="$(lsb_release -r -s)"
 DIST_N="$(lsb_release -i -s)"
 
-PKG_SYS="mc htop iftop conky imwheel curl keepassx keepass2 gufw gparted p7zip-full bleachbit compton wmctrl kdocker terminator scrot redshift gtk-redshift synaptic aptitude cups csh lib32stdc++6 cryptkeeper gnome-tweak-tool"
+PKG_SYS="mc htop iftop conky imwheel curl keepassx keepass2 gufw gparted p7zip-full bleachbit compton wmctrl kdocker terminator scrot redshift gtk-redshift synaptic aptitude cups csh lib32stdc++6 cryptkeeper gnome-tweak-tool shutter"
 PKG_DEV="build-essential gdb git tig python-pip monodevelop mono-runtime geany geany-common netbeans meld"
 PKG_MEDIA="vlc soundconverter easytag sound-juicer libdvdread4 brasero ubuntu-restricted-extras"
 PKG_OFFICE="pdfshuffler pdfchain libreoffice-impress gscan2pdf simple-scan nautilus-dropbox thunderbird thunderbird-locale-de xul-ext-lightning"
@@ -330,6 +330,7 @@ function install_ext_gitkraken()
 	curl -sL -o gitkraken.deb https://release.gitkraken.com/linux/gitkraken-amd64.deb | sudo -E bash -
 	# using dpkg to force install gitkraken over older versions
 	sudo dpkg -i gitkraken.deb
+	rm gitkraken.deb
 	echo "Gitkraken insalled"
 }
 
@@ -356,9 +357,11 @@ function install_ext_skype()
 {
 	echo -e "\nInstalling Skype"
 	sudo apt update && sudo apt install -y curl
+	curl https://repo.skype.com/data/SKYPE-GPG-KEY | sudo apt-key add -
 	curl -sL -o skype.deb https://go.skype.com/skypeforlinux-64.deb | sudo -E bash -
 	# using dpkg to force install deb over older versions
 	sudo dpkg -i skype.deb
+	rm skype.deb
 	echo "Skype insalled"
 }
 
@@ -394,7 +397,8 @@ function install_ext_remarkable()
 	sudo apt update && sudo apt install -y curl
 	curl -sL -o remarkable.deb https://remarkableapp.github.io/files/remarkable_1.87_all.deb | sudo -E bash -
 	# using dpkg to force install deb over older versions
-	sudo dpkg -i remarkable.deb
+	sudo apt -i remarkable.deb
+	rm remarkable.deb
 	echo "remarkable insalled"
 }
 
@@ -436,8 +440,8 @@ function install_PPA_themes()
 	sudo sudo sudo add-apt-repository ppa:noobslab/icons -y
 	sudo apt update
 	sudo apt install -y t4g-v2-theme minwaita-theme albatross-theme chrome-android-os-themes arc-theme
-	sudo apt install -y perforated-edge-icons arc-icons evolvere-icon-suite faenza-icon-theme faience-icon-theme 
-	#intellij-idea-community
+	sudo apt install -y perforated-edge-icons arc-icons faenza-icon-theme faience-icon-theme 
+	#evolvere-icon-suite
 	echo "themes installed"
 }
 
