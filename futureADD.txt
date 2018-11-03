@@ -18,3 +18,7 @@ vlc
 #sec
 cryptkeeper
 
+#mail
+sudo apt-get install gnupg2 gnupg-doc 
+sudo apt-get install seahorse seahorse-nautilus 
+
